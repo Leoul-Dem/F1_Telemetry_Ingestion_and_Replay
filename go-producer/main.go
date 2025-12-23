@@ -1,15 +1,17 @@
 package main
 
 import (
-	//"context"
-
+	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"strconv"
-	"encoding/json"
 	"sync"
-	//"github.com/redis/go-redis/v9"
+	"reflect"
+	"github.com/joho/godotenv"
+	"os"
+	"github.com/redis/go-redis/v9"
 )
 
 type carLocation struct {
@@ -60,84 +62,75 @@ func fetchJson(url string, target interface{}) {
 	log.Printf("Fetching data from: %s\n", url)
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatalf("Failed to fetch data from: %s", url)
+		log.Printf("Failed to fetch data from: %s", url)
+		return
 	}
 	log.Printf("URL: %s | Response status: %s\n", url, resp.Status)
 	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&target); err != nil {
-		if syntaxErr, ok := err.(*json.SyntaxError); ok {
-        	fmt.Printf("JSON syntax error at byte %d: %w", syntaxErr.Offset, err)
-	    }
-	    if typeErr, ok := err.(*json.UnmarshalTypeError); ok {
-	        fmt.Printf("JSON type mismatch: expected %s but got %s at field %s", 
-	            typeErr.Type, typeErr.Value, typeErr.Field)
-	    }
+	
+	err = json.NewDecoder(resp.Body).Decode(&target)
+	if err != nil {
+		log.Printf("Failed to decode JSON response: %v", err)
 	}
 }
 
-func pushData(data interface{}) {
-	log.Printf("Pushing data to : %v\n", data)
+func pushData(client *redis.Client, stream string, data interface{}) {
+	ctx := context.Background()
+	val := reflect.ValueOf(data)
+
+	if val.Kind() != reflect.Slice {
+		log.Println("pushData: data is not a slice")
+		return
+	}
+	log.Printf("Pushing %d items to stream %s...", val.Len(), stream)
+	for i := 0; i < val.Len(); i++ {
+		item := val.Index(i).Interface()
+		jsonData, err := json.Marshal(item)
+		if err != nil {
+			log.Printf("Error marshaling item: %v\n", err)
+			continue
+		}
+		
+		err = client.XAdd(ctx, &redis.XAddArgs{
+			Stream: stream,
+			Values: map[string]interface{}{
+				"data": jsonData,
+			},
+		}).Err()
+		if err != nil {
+			log.Printf("Error pushing to Redis stream %s: %v\n", stream, err)
+		}
+	}
+	log.Printf("Finished pushing to %s", stream)
 }
 
 func main() {
 
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	client := redis.NewClient(&redis.Options{
+		Addr:     os.Getenv("REDIS_ADDR"),
+	})
 	api_url := fmt.Sprintf("%s%s&%s", baseURL(Location), sessionKey(9161), date("2023-09-16T13:03:35.200", "2023-09-16T13:03:35.800"))
 	api_url2 := fmt.Sprintf("%s%s&%s", baseURL(CarData), sessionKey(9161), date("2023-09-16T13:03:35.200", "2023-09-16T13:03:35.800"))
 
 	var wg sync.WaitGroup
-	location := []carLocation{}
-	performance := []carPerformance{}
-	
-	wg.Add(2)
-	go func() {
-		defer wg.Done()
-		fetchJson(api_url, &location)
-	}()
-	go func() {
-		defer wg.Done()
-		fetchJson(api_url2, &performance)
-	}()
-	wg.Wait()
-	
-	fmt.Println(len(location))
-	fmt.Println(len(performance))
-
-	// log.Printf("Fetching data from: %s\n", api_url)
-	// resp, err := http.Get(api_url)
-	// if err != nil {
-	// 	log.Fatalf("Failed to fetch data from: %s", api_url)
-	// }
-	
-	
-	// log.Printf("Fetching data from: %s\n", api_url2)
-	// resp2, err2 := http.Get(api_url2)
-	// if err2 != nil {
-	// 	log.Fatalf("Failed to fetch data from: %s", api_url2)
-	// }
-	
-	
-
-	// defer resp.Body.Close()
-	// defer resp2.Body.Close()
-	
-	
-	// fmt.Println(resp)
-	// fmt.Println()
-	// fmt.Println(resp2)
-
-	// var points []driver_info
-	// if err := json.NewDecoder(resp.Body).Decode(&points); err != nil {
-	// 	log.Fatalf("Failed to decode JSON: %v", err)
-	// }
-
-	// log.Printf("Successfully fetched %d data points", len(points))
-
-	// for i, p := range points {
-	// 	fmt.Printf("%d. Session Key: %d\n", i+1, p.SessionKey)
-	// 	fmt.Printf("%d. Driver Number: %d\n", i+1, p.DriverNumber)
-	// 	fmt.Printf("%d. Speed: %d\n", i+1, p.Speed)
-	// 	fmt.Printf("%d. Date: %s\n", i+1, p.Date)
-	// 	fmt.Println("____________________")
-	// }
-
+	// for{
+		wg.Add(2)
+		go func() {
+			defer wg.Done()
+			location := []carLocation{}
+			fetchJson(api_url, &location)
+			pushData(client, "location", location)
+		}()
+		go func() {
+			defer wg.Done()
+			performance := []carPerformance{}
+			fetchJson(api_url2, &performance)
+			pushData(client, "performance", performance)
+		}()
+		wg.Wait()
+	// }	
 }
