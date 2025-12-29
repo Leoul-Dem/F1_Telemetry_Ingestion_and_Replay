@@ -1,0 +1,53 @@
+2025/12/29 01:38:44 Connected to Redis at localhost:6379
+2025/12/29 01:38:44 Starting telemetry ingestion for session: 9140
+2025/12/29 01:38:44 Poll interval: 1000ms
+2025/12/29 01:38:44 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A08%3A00Z&date%3E=2023-07-29T15%3A05%3A00Z&session_key=9140
+2025/12/29 01:38:46 Fetched 13920 location points
+2025/12/29 01:38:47 Fetched 13720 car data points
+2025/12/29 01:38:47 Pushed 13920 locations to telemetry:location:9140
+2025/12/29 01:38:48 Pushed 13720 car data points to telemetry:cardata:9140
+2025/12/29 01:38:48 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A11%3A00Z&date%3E=2023-07-29T15%3A08%3A00Z&session_key=9140
+2025/12/29 01:38:50 Fetched 13860 location points
+2025/12/29 01:38:50 Fetched 13400 car data points
+2025/12/29 01:38:51 Pushed 13860 locations to telemetry:location:9140
+2025/12/29 01:38:51 Pushed 13400 car data points to telemetry:cardata:9140
+2025/12/29 01:38:51 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A14%3A00Z&date%3E=2023-07-29T15%3A11%3A00Z&session_key=9140
+2025/12/29 01:38:54 Fetched 14200 location points
+2025/12/29 01:38:54 Fetched 13560 car data points
+2025/12/29 01:38:55 Pushed 14200 locations to telemetry:location:9140
+2025/12/29 01:38:55 Pushed 13560 car data points to telemetry:cardata:9140
+2025/12/29 01:38:55 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A17%3A00Z&date%3E=2023-07-29T15%3A14%3A00Z&session_key=9140
+2025/12/29 01:38:57 Fetched 13520 car data points
+2025/12/29 01:38:57 Fetched 13740 location points
+2025/12/29 01:38:57 Pushed 13520 car data points to telemetry:cardata:9140
+2025/12/29 01:38:58 Pushed 13740 locations to telemetry:location:9140
+2025/12/29 01:38:58 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A20%3A00Z&date%3E=2023-07-29T15%3A17%3A00Z&session_key=9140
+2025/12/29 01:38:59 Fetched 13700 location points
+2025/12/29 01:39:00 Fetched 13720 car data points
+2025/12/29 01:39:00 Pushed 13700 locations to telemetry:location:9140
+2025/12/29 01:39:00 Pushed 13720 car data points to telemetry:cardata:9140
+2025/12/29 01:39:00 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A23%3A00Z&date%3E=2023-07-29T15%3A20%3A00Z&session_key=9140
+2025/12/29 01:39:02 Fetched 13520 location points
+2025/12/29 01:39:03 Fetched 13220 car data points
+2025/12/29 01:39:03 Pushed 13520 locations to telemetry:location:9140
+2025/12/29 01:39:03 Pushed 13220 car data points to telemetry:cardata:9140
+2025/12/29 01:39:03 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A26%3A00Z&date%3E=2023-07-29T15%3A23%3A00Z&session_key=9140
+2025/12/29 01:39:05 Fetched 13720 location points
+2025/12/29 01:39:06 Pushed 13720 locations to telemetry:location:9140
+2025/12/29 01:39:06 Fetched 13040 car data points
+2025/12/29 01:39:06 Pushed 13040 car data points to telemetry:cardata:9140
+2025/12/29 01:39:06 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A29%3A00Z&date%3E=2023-07-29T15%3A26%3A00Z&session_key=9140
+2025/12/29 01:39:08 Fetched 13700 location points
+2025/12/29 01:39:08 Fetched 13340 car data points
+2025/12/29 01:39:09 Pushed 13700 locations to telemetry:location:9140
+2025/12/29 01:39:09 Pushed 13340 car data points to telemetry:cardata:9140
+2025/12/29 01:39:09 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A32%3A00Z&date%3E=2023-07-29T15%3A29%3A00Z&session_key=9140
+2025/12/29 01:39:12 Fetched 13380 location points
+2025/12/29 01:39:12 Pushed 13380 locations to telemetry:location:9140
+2025/12/29 01:39:13 Fetched 13100 car data points
+2025/12/29 01:39:13 Pushed 13100 car data points to telemetry:cardata:9140
+2025/12/29 01:39:13 https://api.openf1.org/v1/location?date%3C=2023-07-29T15%3A35%3A00Z&date%3E=2023-07-29T15%3A32%3A00Z&session_key=9140
+2025/12/29 01:39:15 Fetched 13480 location points
+2025/12/29 01:39:16 Pushed 13480 locations to telemetry:location:9140
+2025/12/29 01:39:16 Fetched 13500 car data points
+2025/12/29 01:39:17 Pushed 13500 car data points to telemetry:cardata:9140

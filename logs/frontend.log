@@ -1,0 +1,49 @@
+127.0.0.1 - - [29/Dec/2025 01:39:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Dec/2025 01:39:01] "GET /styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [29/Dec/2025 01:39:01] "GET /drivers.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Dec/2025 01:39:01] "GET /app.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Dec/2025 01:39:01] code 404, message File not found
+127.0.0.1 - - [29/Dec/2025 01:39:01] "GET /favicon.ico HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53278)
+Traceback (most recent call last):
+  File "/usr/lib64/python3.14/http/server.py", line 791, in send_head
+    f = open(path, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/leoul/Documents/dev/F1_Telemetry_Ingestion_and_Replay/frontend/favicon.ico'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib64/python3.14/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/http/server.py", line 1422, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             directory=args.directory)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/http/server.py", line 732, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/usr/lib64/python3.14/http/server.py", line 496, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib64/python3.14/http/server.py", line 484, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/usr/lib64/python3.14/http/server.py", line 736, in do_GET
+    f = self.send_head()
+  File "/usr/lib64/python3.14/http/server.py", line 793, in send_head
+    self.send_error(HTTPStatus.NOT_FOUND, "File not found")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/http/server.py", line 551, in send_error
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.14/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------

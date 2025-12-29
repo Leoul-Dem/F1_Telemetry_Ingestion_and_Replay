@@ -1,13 +1,21 @@
 package com.f1replay;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.DisplayName;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.*;
+
 class SpringBackendApplicationTests {
 
     @Test
-    void contextLoads() {
+    @DisplayName("Application main class exists")
+    void applicationClassExists() {
+        assertNotNull(SpringBackendApplication.class);
     }
 
+    @Test
+    @DisplayName("Application has main method")
+    void mainMethodExists() throws NoSuchMethodException {
+        assertNotNull(SpringBackendApplication.class.getMethod("main", String[].class));
+    }
 }

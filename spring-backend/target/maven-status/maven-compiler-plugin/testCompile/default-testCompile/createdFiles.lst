@@ -1,0 +1,12 @@
+com/f1replay/model/SessionInfoTest.class
+com/f1replay/model/PlaybackSpeedTest.class
+com/f1replay/model/CarDataTest.class
+com/f1replay/SpringBackendApplicationTests.class
+com/f1replay/service/RedisStreamServiceTest.class
+com/f1replay/model/TelemetryBatchTest.class
+com/f1replay/model/PlaybackStateTest.class
+com/f1replay/service/SessionServiceTest.class
+com/f1replay/controller/SessionControllerTest.class
+com/f1replay/service/ReplayServiceTest.class
+com/f1replay/model/LocationPointTest.class
+com/f1replay/controller/PlaybackControllerTest.class

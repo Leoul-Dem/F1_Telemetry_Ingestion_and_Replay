@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # Redis - Message Broker & Stream Storage
+  redis:
+    image: redis:7-alpine
+    container_name: f1-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - f1-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # PostgreSQL - Metadata Storage
+  postgres:
+    image: postgres:15-alpine
+    container_name: f1-postgres
+    environment:
+      POSTGRES_DB: telemetry_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: f1password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - f1-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Go Producer - Fetches from OpenF1 API and pushes to Redis
+  go-producer:
+    build:
+      context: ./go-producer
+      dockerfile: Dockerfile
+    container_name: f1-go-producer
+    environment:
+      - REDIS_ADDR=redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - f1-network
+    restart: on-failure
+    
+  # Spring Boot Backend - Consumes from Redis and serves WebSocket
+  spring-backend:
+    build:
+      context: ./spring-backend
+      dockerfile: Dockerfile
+    container_name: f1-spring-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/telemetry_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=f1password
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - f1-network
+    restart: on-failure
+    
+networks:
+  f1-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+  postgres_data:

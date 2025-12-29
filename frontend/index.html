@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Telemetry Replay</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <span class="title">┌─ F1 TELEMETRY REPLAY ─────────────────────────────────────────────────────────────────────────────────┐</span>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Driver List Panel -->
+            <aside class="driver-panel">
+                <div class="panel-header">┌─ DRIVERS ──────────────────┐</div>
+                <div class="driver-list-header">
+                    <span class="col-pos">#</span>
+                    <span class="col-name">NAME</span>
+                    <span class="col-tire">TIRE</span>
+                    <span class="col-speed">SPD</span>
+                </div>
+                <div class="driver-list" id="driverList">
+                    <!-- Driver rows populated by JS -->
+                </div>
+                <div class="panel-footer">└────────────────────────────┘</div>
+            </aside>
+
+            <!-- Track Canvas -->
+            <section class="track-panel">
+                <div class="panel-header">┌─ TRACK ────────────────────────────────────────────────────────────────────────┐</div>
+                <div class="track-container">
+                    <canvas id="trackCanvas"></canvas>
+                </div>
+                <div class="panel-footer">└────────────────────────────────────────────────────────────────────────────────┘</div>
+            </section>
+
+            <!-- Info Panel -->
+            <aside class="info-panel">
+                <div class="panel-header">┌─ SESSION ──────────┐</div>
+                <div class="info-content">
+                    <div class="info-row">
+                        <span class="info-label">STATUS:</span>
+                        <span class="info-value" id="statusValue">IDLE</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">SESSION:</span>
+                        <span class="info-value" id="sessionValue">--</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">TIME:</span>
+                        <span class="info-value" id="timeValue">--:--:--</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">SPEED:</span>
+                        <span class="info-value" id="speedValue">1.0x</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">CARS:</span>
+                        <span class="info-value" id="carsValue">0</span>
+                    </div>
+                </div>
+                <div class="panel-footer">└────────────────────┘</div>
+            </aside>
+        </main>
+
+        <!-- Media Controls -->
+        <footer class="controls">
+            <div class="controls-border">┌─ CONTROLS ────────────────────────────────────────────────────────────────────────────────────────────┐</div>
+            <div class="controls-content">
+                <div class="control-group">
+                    <label for="sessionSelect">SESSION:</label>
+                    <select id="sessionSelect" class="tui-select">
+                        <option value="9140">2024 Monaco GP - Race</option>
+                    </select>
+                </div>
+                <div class="control-group transport">
+                    <button id="btnPlay" class="tui-btn">[▶ PLAY]</button>
+                    <button id="btnPause" class="tui-btn">[⏸ PAUSE]</button>
+                    <button id="btnStop" class="tui-btn">[⏹ STOP]</button>
+                </div>
+                <div class="control-group">
+                    <label for="speedSelect">SPEED:</label>
+                    <select id="speedSelect" class="tui-select">
+                        <option value="0.5">0.5x</option>
+                        <option value="1" selected>1.0x</option>
+                        <option value="2">2.0x</option>
+                        <option value="4">4.0x</option>
+                        <option value="8">8.0x</option>
+                    </select>
+                </div>
+                <div class="control-group seek-group">
+                    <label>SEEK:</label>
+                    <input type="range" id="seekSlider" class="tui-slider" min="0" max="100" value="0">
+                    <span id="seekTime" class="seek-time">00:00:00</span>
+                </div>
+                <div class="control-group connection">
+                    <span class="conn-indicator" id="connIndicator">●</span>
+                    <span id="connStatus">DISCONNECTED</span>
+                </div>
+            </div>
+            <div class="controls-border">└───────────────────────────────────────────────────────────────────────────────────────────────────────┘</div>
+        </footer>
+    </div>
+
+    <script src="drivers.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
