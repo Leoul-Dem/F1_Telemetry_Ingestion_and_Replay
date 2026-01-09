@@ -1,5 +1,102 @@
-.gitignore
-implementation_plan2.md
-implementation_plan.md
-info.txt
-.idea
+# Redis data files
+dump.rdb
+*.rdb
+*.aof
+appendonlydir/
+
+# Java/Maven
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Go binaries
+go-producer/producer
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Log files
+logs/
+*.log
+
+# IDE - Eclipse
+.classpath
+.project
+.factorypath
+.settings/
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - VS Code
+.vscode/
+
+# IDE - NetBeans
+nbproject/
+nbbuild/
+nbdist/
+nb-configuration.xml
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# Node.js (if applicable)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if applicable)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.venv/
+venv/
+ENV/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+\#*\#
+
+# Coverage reports
+coverage/
+*.lcov
+jacoco/
+
+# Build directories
+build/
+dist/
